@@ -65,25 +65,38 @@ def changeHackedMoney(self, hackedMoney, m):
         print('+' + str(self.hackedMoney) + '$')
 
 def upgradeEarner(self):
-    self.earnerLevel = self.earnerLevel + 1
-    if(self.earnerLevel == 1 and self.balance != 0):
+    x = 0
+    if(self.earnerLevel == 0 and self.balance >= 0):
+        addOfflineEarnings(self, 50)
+        x = x+100
+        self.balance = self.balance-x
+        self.earnerLevel = self.earnerLevel + 1
+    elif(self.earnerLevel == 1 and self.balance >= 0):
         addOfflineEarnings(self, 100)
-        self.balance = self.balance-100
-    elif(self.earnerLevel == 2 and self.balance != 0):
+        x = x+200
+        self.balance = self.balance-x
+        self.earnerLevel = self.earnerLevel + 1
+    elif(self.earnerLevel == 2 and self.balance >= 0):
         addOfflineEarnings(self, 200)
-        self.balance = self.balance-200
-    elif(self.earnerLevel == 3 and self.balance != 0):
+        x = x+500
+        self.balance = self.balance-x
+        self.earnerLevel = self.earnerLevel + 1
+    elif(self.earnerLevel == 3 and self.balance >= 0):
         addOfflineEarnings(self, 500)
-        self.balance = self.balance-500
-    elif(self.earnerLevel > 3 and self.balance != 0):
+        x = x+1000
+        self.balance = self.balance-x
+        self.earnerLevel = self.earnerLevel + 1
+    elif(self.earnerLevel > 3 and self.balance >= 0):
         addOfflineEarnings(self, self.offlineEarnings + self.offlineEarnings)
-        self.balance = self.balance-(self.offlineEarnings + self.offlineEarnings)
-    if(self.balance == 0):
+        x = x+x
+        self.balance = self.balance-x
+        self.earnerLevel = self.earnerLevel + 1
+    elif(self.earnerLevel > 0 and self.balance == 0):
         print("You are not having enough money :(")
 
 def addOfflineEarnings(self, increaseBy):
-    if(time.time() - startTime >= 5):
-        self.offlineEarnings = self.offlineEarnings + increaseBy
+    self.offlineEarnings = self.offlineEarnings + increaseBy
+    self.balance = self.balance + self.offlineEarnings
 
 atm = ATM(1000, 0, 0, 0)
 atm.inputMode()
